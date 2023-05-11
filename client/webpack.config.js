@@ -18,52 +18,50 @@ module.exports = () => {
       path: path.resolve(__dirname, "dist"),
     },
     plugins: [
-      new HtmlWebpackPlugin({
-        template: "./src/index.html",
-        chunks: ["main"],
-      }),
-      new HtmlWebpackPlugin({
-        template: "./src/install.html",
-        filename: "install.html",
-        chunks: ["install"],
-      }),
-      new WebpackPwaManifest({
-        name: "Text Editor",
-        short_name: "editor",
-        description: "text editor application",
-        background_color: "#ffffff",
-        theme_color: "#000000",
-        icons: [
-          {
-            src: path.resolve("src/assets/icon.png"),
-            sizes: [96, 128, 192, 256, 384, 512],
-            destination: path.join("assets", "icons"),
-          },
-        ],
-      }),
-      new InjectManifest({
-        swSrc: "./src/service-worker.js",
-        swDest: "service-worker.js",
-      }),
-    ],
-
+        new HtmlWebpackPlugin({
+            template: './index.html',
+            title: 'Jate',
+          }),
+          new InjectManifest({
+            swSrc: './src-sw.js',
+            swDest: 'src-sw.js',
+          }),
+          new WebpackPwaManifest({
+            name: 'Text Editor',
+            short_name: 'TE',
+            description: 'This is a application to take notes.',
+            background_color: '#272822',
+            fingerprints: false,
+            inject:true,
+            start_url: '/',
+            publicPath: '/',
+            icons: [
+                {
+                    src: path.resolve('src/images/logo.png'),
+                    sizes: [96, 128, 192, 256, 384, 512],
+                    destination: path.join('assets', 'icons')
+                  }
+                ]
+              })
+            ],
     module: {
       rules: [
         {
-          test: /\.css$/,
-          use: ["style-loader", "css-loader"],
-        },
-        {
-          test: /\.js$/,
-          exclude: /node_modules/,
-          use: {
-            loader: "babel-loader",
-            options: {
-              presets: ["@babel/preset-env"],
+            test: /\.css$/i,
+            use: ['style-loader', 'css-loader'],
+          },
+          {
+            test: /\.m?js$/,
+            exclude: /node_modules/,
+            use: {
+              loader: 'babel-loader',
+              options: {
+                presets: ['@babel/preset-env'],
+                plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/transform-runtime'],
+              },
             },
           },
-        },
-      ],
-    },
+        ],
+      },
+    };
   };
-};
