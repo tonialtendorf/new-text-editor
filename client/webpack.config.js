@@ -28,9 +28,9 @@ module.exports = () => {
         chunks: ["install"],
       }),
       new WebpackPwaManifest({
-        name: "Your App Name",
-        short_name: "App",
-        description: "Your app description",
+        name: "Text Editor",
+        short_name: "editor",
+        description: "text editor application",
         background_color: "#ffffff",
         theme_color: "#000000",
         icons: [
